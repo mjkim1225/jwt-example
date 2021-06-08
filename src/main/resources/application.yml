@@ -19,3 +19,15 @@ spring:
       hibernate:
         format_sql: true
         show_sql: true
+
+logging:
+  level:
+    com.example: DEBUG
+
+#jwt관련 설정
+jwt:
+  header: Authorization
+  #HS512 알고리즘을 사용할 것이기 때문에 512bit, 즉 64byte 이상의 secret key를 사용해야 한다.
+  #echo 'gaia3d-mjkim-spring-boot-jwt-tutorial'|base64
+  secret: Z2FpYTNkLW1qa2ltLXNwcmluZy1ib290LWp3dC10dXRvcmlhbA==
+  token-validity-in-seconds: 86400  #토큰 만료 시간
