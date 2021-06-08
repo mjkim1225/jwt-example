@@ -1,0 +1,20 @@
+server:
+  port: 8888
+
+
+spring:
+# Database
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:15432/jwt
+    username: postgres
+    password: postgres
+# JPA properties
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create #update # When you launch the application for the first time - switch "none" at "create"
+    properties:
+      hibernate:
+        format_sql: true
+        show_sql: true
