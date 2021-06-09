@@ -37,14 +37,19 @@ public class AuthController {
     @PostMapping("/authenticate")
     public ResponseEntity<TokenDto> authorize(@Valid @RequestBody LoginDto loginDto) {
 
+        // username과 password를 받아서 Authentication Token을 생성
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword());
 
+        // 생성한 토큰을 이용해서 Authentication객체를 만들 때, CustomUserDetailsService의 loadUserByUsername 메소드가 실행 됨.
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+        // 생성한 Authentication객체를 SecurityContext에 저장
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
+        // 인증정보를 기반으로 토큰 생성
         String jwt = tokenProvider.createToken(authentication);
 
+        //reponse헤더에 토큰 저장
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 

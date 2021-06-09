@@ -57,10 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
             .antMatchers("/api/authenticate").permitAll() //토큰을 받기위한 log in api -- 토큰 없는 상태로 요청이 들어옴
             .antMatchers("/api/signup").permitAll() //회원 가입을 위한 api -- 토큰 없는 상태로 요청이 들어옴
             // 토큰이 없는 상테에서 들어오는 요청은 모두 허락함
-            .anyRequest().authenticated()
+            .anyRequest().authenticated();
 
-            .and()
-            .apply(new JwtSecurityConfig(tokenProvider)); // jwtFilter를 addFilterBefore로 등록했던 JwtSecurityConfig도 적용
+            // .and()
+            // .apply(new JwtSecurityConfig(tokenProvider)); // jwtFilter를 addFilterBefore로 등록했던 JwtSecurityConfig도 적용
     }
 
 
