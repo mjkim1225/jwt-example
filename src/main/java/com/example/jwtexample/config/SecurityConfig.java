@@ -5,6 +5,7 @@ import com.example.jwtexample.jwt.JwtAuthenticationEntryPoint;
 import com.example.jwtexample.jwt.JwtSecurityConfig;
 import com.example.jwtexample.jwt.TokenProvider;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -21,19 +22,14 @@ import org.springframework.web.filter.CorsFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true) //나중에 @preAuthorized 어노테이션을 메소드단위로 사용하기 위해 적용
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
-    private final TokenProvider tokenProvider;
-    private final CorsFilter corsFilter;
-    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
-
-    public SecurityConfig(TokenProvider tokenProvider, CorsFilter corsFilter,
-        JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, JwtAccessDeniedHandler jwtAccessDeniedHandler) {
-
-        this.tokenProvider = tokenProvider;
-        this.corsFilter = corsFilter;
-        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
-        this.jwtAccessDeniedHandler = jwtAccessDeniedHandler;
-    }
+    @Autowired
+    private TokenProvider tokenProvider;
+    @Autowired
+    private CorsFilter corsFilter;
+    @Autowired
+    private JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    @Autowired
+    private JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
     @Bean
     public PasswordEncoder PasswordEncoder() {
@@ -48,7 +44,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
                         "/error"
                 );
     }
-
 
     @Override 
     protected void configure(HttpSecurity http)throws Exception {

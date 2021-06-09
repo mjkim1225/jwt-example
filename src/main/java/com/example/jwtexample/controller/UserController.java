@@ -1,5 +1,6 @@
 package com.example.jwtexample.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -13,11 +14,9 @@ import com.example.jwtexample.service.UserService;
 @RestController
 @RequestMapping("/api")
 public class UserController {
-    private final UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
-    }
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/hello")
     public ResponseEntity<String> hello() {

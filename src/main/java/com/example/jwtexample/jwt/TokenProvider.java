@@ -25,17 +25,14 @@ import java.util.stream.Collectors;
 @Component
 public class TokenProvider implements InitializingBean{
 
-    private final String secret;
-    private final long tokenValidityInMilliseconds ;
+    @Value("${jwt.secret}")
+    private String secret;
+    @Value("${jwt.token-validity-in-seconds}")
+    private long tokenValidityInMilliseconds ;
     
     private static final String AUTHORITIES_KEY = "auth";
     private Key key;
-
-    public TokenProvider (@Value("${jwt.secret}")String secret, @Value("${jwt.token-validity-in-seconds}")long tokenValidityInseconds) {
-        this.secret = secret;
-        this.tokenValidityInMilliseconds = tokenValidityInseconds * 1000;
-    }
-
+    
     @Override //빈이 생성이 되고 주입을 받은 후에 secret값을 디코딩해서 key변수에 할당하기 위함
     public void afterPropertiesSet() throws Exception {
         byte[] keyBytes = Decoders.BASE64.decode(secret);   

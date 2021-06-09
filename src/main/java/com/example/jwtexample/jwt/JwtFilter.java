@@ -27,6 +27,7 @@ public class JwtFilter extends GenericFilter {
     }
 
     // request가 들어오면, security context에 authentication저장
+    //jwt token의 인증정보를 실행 중인 SecurityContext에 저장하는 역할 수행
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
        throws IOException, ServletException {
