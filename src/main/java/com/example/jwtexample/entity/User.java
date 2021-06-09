@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -21,6 +22,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity //데이터베이스 테이블과 1:1로 매핑되는 객체
+@SequenceGenerator(
+  name = "users_seq_generator", 
+  sequenceName = "users_seq", // 매핑할 데이터베이스 시퀀스 이름 
+  initialValue = 1,
+  allocationSize = 1)
 @Table(name="users") //테이블 명 지정
 @Getter
 @Setter
@@ -32,7 +38,10 @@ public class User {
     @JsonIgnore
     @Id
     @Column(name = "user_id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(
+        strategy = GenerationType.SEQUENCE,
+        generator = "users_seq_generator"
+    )
     private Long userId;
 
     @Column(name = "username", length = 50, unique = true)
