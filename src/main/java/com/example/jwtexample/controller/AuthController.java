@@ -47,7 +47,7 @@ public class AuthController {
         // 인증정보를 기반으로 토큰 생성
         String jwt = tokenProvider.createToken(authentication);
 
-        //reponse헤더에 토큰 저장
+        // reponse헤더에 토큰 저장
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add(JwtFilter.AUTHORIZATION_HEADER, "Bearer " + jwt);
 

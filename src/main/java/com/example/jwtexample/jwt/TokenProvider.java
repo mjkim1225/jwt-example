@@ -28,7 +28,7 @@ public class TokenProvider implements InitializingBean{
     @Value("${jwt.secret}")
     private String secret;
     @Value("${jwt.token-validity-in-seconds}")
-    private long tokenValidityInMilliseconds ;
+    private long tokenValidityInSeconds ;
     
     private static final String AUTHORITIES_KEY = "auth";
     private Key key;
@@ -46,13 +46,15 @@ public class TokenProvider implements InitializingBean{
                             .map(GrantedAuthority::getAuthority)
                             .collect(Collectors.joining(","));
 
-        long now = (new Date()).getTime();
-        Date validity = new Date(now + this.tokenValidityInMilliseconds);
+        Date now = new Date();
+        
+        Date validity = new Date(now.getTime() + this.tokenValidityInSeconds*1000);
     
         return Jwts.builder()
             .setSubject(authentication.getName())
             .claim(AUTHORITIES_KEY, authorities) //JWT는 claim방식의 토큰을 사용하는데 claim이란 사용자에 대한 속성 등을 의미 
             .signWith(key, SignatureAlgorithm.HS512)
+            .setIssuedAt(now)
             .setExpiration(validity)
             .compact();
     }
